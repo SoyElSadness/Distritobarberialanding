@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+
+<html class="dark scroll-smooth" lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>
+@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}
+::-webkit-scrollbar{display:none;}
+
+/* Keyframe animations and micro-interactions */
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+.gold-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.gold-shimmer::after {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.22) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  content: '';
+  pointer-events: none;
+}
+.gold-shimmer:hover::after {
+  animation: shimmer 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Scroll reveal initial states */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Accessible reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::after, ::before {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-init {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary-fixed":"#e2e2e2","surface":"#131313","tertiary-fixed":"#ffdf98","on-error":"#690005","inverse-on-surface":"#313030","surface-container-highest":"#353534","on-error-container":"#ffdad6","on-secondary":"#2c3136","on-primary-container":"#636565","secondary":"#c3c7cd","on-primary-fixed-variant":"#454747","surface-container-low":"#1c1b1b","on-secondary-fixed":"#171c20","error":"#ffb4ab","on-secondary-container":"#b4b9bf","secondary-fixed-dim":"#c3c7cd","inverse-surface":"#e5e2e1","primary-container":"#e2e2e2","tertiary-container":"#ffdf98","secondary-fixed":"#dfe3e9","secondary-container":"#454a4f","on-tertiary-fixed":"#251a00","outline-variant":"#444748","surface-container-lowest":"#0e0e0e","surface-bright":"#3a3939","outline":"#8e9192","on-tertiary-container":"#7e6000","on-primary-fixed":"#1a1c1c","primary":"#ffffff","inverse-primary":"#5d5f5f","on-secondary-fixed-variant":"#43474c","error-container":"#93000a","surface-tint":"#c6c6c7","on-primary":"#2f3131","on-tertiary-fixed-variant":"#5a4300","primary-fixed-dim":"#c6c6c7","surface-container":"#201f1f","background":"#131313","surface-dim":"#131313","on-tertiary":"#3e2e00","on-surface-variant":"#c4c7c8","on-background":"#e5e2e1","surface-container-high":"#2a2a2a","on-surface":"#e5e2e1","surface-variant":"#353534","tertiary-fixed-dim":"#eec14b","tertiary":"#ffffff"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{gutter:"1.5rem","space-xs":"0.25rem","space-xl":"2.5rem",margin:"2rem","space-sm":"0.5rem","space-lg":"1.5rem","space-md":"1rem"},fontFamily:{"title-lg":["Hanken Grotesk"],"headline-xl":["Bodoni Moda"],"display-hero-mobile":["Bodoni Moda"],"label-sm":["Hanken Grotesk"],"body-lg":["Hanken Grotesk"],"display-hero":["Bodoni Moda"],"headline-xl-mobile":["Bodoni Moda"],"headline-lg":["Bodoni Moda"],"body-md":["Hanken Grotesk"],"label-lg":["Hanken Grotesk"],"headline-md":["Bodoni Moda"]},fontSize:{"title-lg":["18px",{lineHeight:"24px",letterSpacing:"0.02em",fontWeight:"600"}],"headline-xl":["40px",{lineHeight:"48px",letterSpacing:"0.05em",fontWeight:"600"}],"display-hero-mobile":["38px",{lineHeight:"44px",letterSpacing:"0.04em",fontWeight:"700"}],"label-sm":["11px",{lineHeight:"16px",letterSpacing:"0.18em",fontWeight:"600"}],"body-lg":["16px",{lineHeight:"26px",letterSpacing:"0.01em",fontWeight:"400"}],"display-hero":["56px",{lineHeight:"64px",letterSpacing:"0.06em",fontWeight:"700"}],"headline-xl-mobile":["30px",{lineHeight:"36px",letterSpacing:"0.03em",fontWeight:"600"}],"headline-lg":["28px",{lineHeight:"36px",letterSpacing:"0.04em",fontWeight:"600"}],"body-md":["14px",{lineHeight:"22px",letterSpacing:"0.01em",fontWeight:"400"}],"label-lg":["13px",{lineHeight:"18px",letterSpacing:"0.14em",fontWeight:"600"}],"headline-md":["22px",{lineHeight:"28px",letterSpacing:"0.03em",fontWeight:"500"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased selection:bg-[#C5A059] selection:text-stone-950"><header class="fixed top-0 left-0 w-full z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.4)] transition-all duration-300"><div class="h-20 max-w-[1280px] mx-auto px-margin flex items-center justify-between"><div class="flex items-center gap-space-md group cursor-pointer"><img alt="Distrito Barbería" class="w-8 h-8 rounded-full object-cover ring-1 ring-[#C5A059]/40 group-hover:ring-[#C5A059] transition-all duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDV6MTg_B1AyQ-qkbAcxh-CZkdW9b1818imUMinjRb_kJ82h7If1RoxrsiDPf55XMLk3vFtA4Q0QL8TJ0F3lw6oEj7uiWoc5CVnK6WoXGLQKIkFh4JWO0qJ_3aS_3BZ3eUKxsZpkLQYKGqu0ASoLJthJZnZ9XnLys7gZkYbyHytbMzCHhkMaEkPVY4e2jZk8VVkBK4vx6wzZEc8LE6pyoxZ4VFNPICtP5TDO2VyKQ71-iHmxNidaaWluA"/><div class="flex flex-col"><span class="font-headline-md text-headline-md tracking-wider uppercase text-primary leading-none transition-colors duration-200 group-hover:text-[#DFB76C]">Distrito</span><span class="font-label-sm text-label-sm uppercase tracking-widest text-outline text-[9px]">Barbería • Hermosillo</span></div></div><nav class="hidden lg:flex items-center gap-space-lg" data-active-classes="text-primary font-bold"><a class="font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant hover:text-[#DFB76C] transition-all duration-200 hover:-translate-y-0.5 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#C5A059] hover:after:w-full after:transition-all after:duration-300" data-path="servicios" href="#menu-servicios">Servicios</a><a class="font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant hover:text-[#DFB76C] transition-all duration-200 hover:-translate-y-0.5 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#C5A059] hover:after:w-full after:transition-all after:duration-300" data-path="experiencia" href="#experiencia">Experiencia</a><a class="font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant hover:text-[#DFB76C] transition-all duration-200 hover:-translate-y-0.5 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#C5A059] hover:after:w-full after:transition-all after:duration-300" data-path="horarios-y-ubicacion" href="#horarios-ubicacion">Horarios &amp; Ubicación</a><a class="font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant hover:text-[#DFB76C] transition-all duration-200 hover:-translate-y-0.5 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#C5A059] hover:after:w-full after:transition-all after:duration-300" data-path="barberos" href="#reservacion">Barberos</a><a class="font-label-lg text-label-lg uppercase tracking-wider text-on-surface-variant hover:text-[#DFB76C] transition-all duration-200 hover:-translate-y-0.5 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#C5A059] hover:after:w-full after:transition-all after:duration-300" data-path="contacto" href="tel:+526621409621">Contacto</a></nav><div class="flex items-center gap-space-md"><a class="gold-shimmer inline-flex items-center justify-center bg-[#C5A059] text-stone-950 font-bold font-label-lg text-label-lg uppercase px-space-lg py-space-sm hover:bg-[#D4AF37] hover:shadow-[0_0_20px_rgba(197,160,89,0.45)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 shadow-md" data-path="agendar-cita" href="#reservacion">Agendar Cita</a><div class="hidden sm:flex items-center pl-space-xs"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-white/10 hover:ring-[#C5A059]/60 transition-all duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDV6MTg_B1AyQ-qkbAcxh-CZkdW9b1818imUMinjRb_kJ82h7If1RoxrsiDPf55XMLk3vFtA4Q0QL8TJ0F3lw6oEj7uiWoc5CVnK6WoXGLQKIkFh4JWO0qJ_3aS_3BZ3eUKxsZpkLQYKGqu0ASoLJthJZnZ9XnLys7gZkYbyHytbMzCHhkMaEkPVY4e2jZk8VVkBK4vx6wzZEc8LE6pyoxZ4VFNPICtP5TDO2VyKQ71-iHmxNidaaWluA"/></div></div></div></header><main class="w-full pt-20 bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- HERO SECTION -->
+<section class="relative w-full overflow-hidden bg-surface-container-lowest">
+<!-- Ambient Steel Scrim & Radial Glow -->
+<div class="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(255,255,255,0.08),rgba(14,14,14,0))]"></div>
+<div class="relative max-w-[1280px] mx-auto px-margin pt-space-xl pb-24 md:pb-32">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+<!-- Text & Headline Column -->
+<div class="lg:col-span-7 flex flex-col items-start z-10">
+<!-- Monogram Tag -->
+<div class="reveal-init inline-flex items-center gap-space-sm bg-surface-container-high px-space-md py-1.5 mb-space-lg shadow-sm border border-white/5 hover:border-[#C5A059]/40 transition-colors duration-300" style="transition-delay: 100ms;">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#DFB76C] opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#DFB76C]"></span>
+</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface">Hermosillo, Sonora • Las Quintas</span>
+</div>
+<h1 class="reveal-init font-display-hero text-display-hero uppercase text-primary tracking-tight leading-[1.05] mb-space-md" style="transition-delay: 200ms;">
+            Distinción,<br/>
+            Carácter &amp;<br/>
+<span class="font-headline-xl italic font-normal text-[#DFB76C] inline-block hover:scale-[1.01] origin-left transition-transform duration-300">Precisión Absoluta.</span>
+</h1>
+<p class="reveal-init font-body-lg text-body-lg text-on-surface-variant max-w-xl mb-space-xl" style="transition-delay: 300ms;">
+            Cortes a tijera y navaja templada, perfilado milimétrico de barba al estilo tradicional con toalla caliente aromatizada y una atmósfera reservada a quienes valoran el detalle.
+          </p>
+<!-- CTAs -->
+<div class="reveal-init flex flex-wrap items-center gap-space-md w-full sm:w-auto mb-space-xl" style="transition-delay: 400ms;">
+<a class="gold-shimmer w-full sm:w-auto inline-flex items-center justify-center gap-space-sm bg-[#C5A059] text-stone-950 font-bold font-label-lg text-label-lg uppercase px-space-xl py-4 shadow-xl hover:bg-[#D4AF37] hover:shadow-[0_0_25px_rgba(197,160,89,0.5)] hover:-translate-y-1 active:translate-y-0 active:scale-[0.99] transition-all duration-200" href="https://wa.me/526621409621?text=Hola%20Distrito%20Barber%C3%ADa,%20deseo%20agendar%20una%20cita" rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-lg transition-transform duration-200 group-hover:rotate-12">calendar_month</span>
+<span>Agendar Vía WhatsApp</span>
+</a>
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs bg-surface-container-high text-[#DFB76C] border border-[#C5A059]/40 font-label-lg text-label-lg uppercase px-space-lg py-4 hover:bg-[#C5A059]/15 hover:border-[#C5A059] hover:shadow-[0_0_15px_rgba(197,160,89,0.2)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 group" href="#menu-servicios">
+<span>Ver Menú &amp; Precios</span>
+<span class="material-symbols-outlined text-lg group-hover:translate-y-1 transition-transform duration-200">arrow_downward</span>
+</a>
+</div>
+<!-- Trust Badges -->
+<div class="reveal-init grid grid-cols-3 gap-space-md w-full max-w-lg pt-space-md bg-surface-container-low/60 p-space-md shadow-sm border border-white/5 hover:border-[#C5A059]/30 transition-all duration-300" style="transition-delay: 500ms;">
+<div class="flex flex-col group/badge cursor-default">
+<span class="font-headline-md text-headline-md text-primary group-hover/badge:text-[#DFB76C] transition-colors duration-200">100%</span>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Navaja Libre</span>
+</div>
+<div class="flex flex-col group/badge cursor-default">
+<span class="font-headline-md text-headline-md text-primary group-hover/badge:text-[#DFB76C] transition-colors duration-200">Cerveza</span>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">&amp; Espresso Gratis</span>
+</div>
+<div class="flex flex-col group/badge cursor-default">
+<span class="font-headline-md text-headline-md text-[#DFB76C] group-hover/badge:scale-105 origin-left transition-transform duration-200">+4.9★</span>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Hermosillo Clientes</span>
+</div>
+</div>
+</div>
+<!-- Hero Visual Showcase -->
+<div class="reveal-init lg:col-span-5 relative mt-space-lg lg:mt-0" style="transition-delay: 350ms;">
+<div class="relative w-full aspect-[4/5] bg-surface-container shadow-2xl overflow-hidden group/heroimg border border-white/5">
+<img class="w-full h-full object-cover grayscale contrast-125 group-hover/heroimg:scale-105 group-hover/heroimg:contrast-115 transition-transform duration-700 ease-out" data-alt="High-contrast monochromatic editorial portrait of a master barber skillfully aligning a straight razor on a client's beard in a luxury vintage salon in Hermosillo. Moody cinematic low-key tungsten lighting, dark wood and polished steel instruments in soft background focus, ultra-sharp detail." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeBv-GFcuMk7kl358FGesH7ixnDTpEG_EHQ0ukiZsg9QoPn0E3eCxc5R3qJEKCGrAclkps7JLD03xSDHGvRW5BWrYaqx9O5CtwwOI9lHWUyxqk9O3S03pvoushf7SXRZRCAMjD9rC5RlZ6GeFmc9VDfKZKzdB3I_p3sMd3LU6n5wLJ9xiTXai5wH8rsFrxehMKqSCCiy2UG1cay3NODvt-ng_qn36jmKVosx8ZZBdN"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent pointer-events-none"></div>
+<!-- Floating Monogram Badge -->
+<div class="absolute bottom-6 left-6 right-6 bg-surface-container-high/90 backdrop-blur-md p-space-md flex items-center justify-between shadow-xl border border-white/10 group-hover/heroimg:border-[#C5A059]/40 transition-colors duration-300">
+<div>
+<p class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Ubicación</p>
+<p class="font-title-lg text-title-lg text-primary">Las Quintas, HMO</p>
+</div>
+<div class="flex items-center gap-space-xs text-primary bg-surface-container px-space-sm py-1 border border-white/5">
+<span class="material-symbols-outlined text-base text-[#DFB76C]">verified</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Maestros Barberos</span>
+</div>
+</div>
+</div>
+<!-- Asymmetric Monogram Watermark behind card -->
+<div class="hidden xl:flex absolute -right-12 -top-12 w-32 h-32 pointer-events-none items-center justify-center opacity-10 text-primary transition-opacity duration-500 hover:opacity-20">
+<span class="font-headline-xl text-[120px] select-none">DB</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- QUICK ACCESS STRIP -->
+<section class="w-full bg-surface-container-high py-space-md border-y border-white/5">
+<div class="max-w-[1280px] mx-auto px-margin flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="relative flex items-center justify-center">
+<span class="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-[#DFB76C] opacity-75"></span>
+<span class="material-symbols-outlined text-primary text-xl relative z-10">schedule</span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center sm:gap-space-md">
+<div class="flex items-center gap-2">
+<span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+<span class="font-label-lg text-label-lg uppercase tracking-wider text-primary">Hoy Abierto</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface-variant">Lunes a Viernes desde 9:00 AM • Las Quintas</span>
+</div>
+</div>
+<div class="flex items-center gap-space-lg">
+<a class="font-label-lg text-label-lg uppercase tracking-wider text-on-surface hover:text-[#DFB76C] transition-colors duration-200 flex items-center gap-space-xs group" href="tel:+526621409621">
+<span class="material-symbols-outlined text-base group-hover:scale-110 transition-transform duration-200 text-[#DFB76C]">call</span>
+          +52 662 140 9621
+        </a>
+<a class="gold-shimmer font-label-sm text-label-sm uppercase tracking-widest text-stone-950 font-bold bg-[#C5A059] px-space-md py-1.5 hover:bg-[#D4AF37] hover:shadow-[0_0_12px_rgba(197,160,89,0.4)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200" href="#reservacion">
+          Cita Rápida
+        </a>
+</div>
+</div>
+</section>
+<!-- SERVICIOS DESTACADOS (CARTA DE BARBERÍA) -->
+<section class="w-full bg-background py-space-xl scroll-mt-24" id="menu-servicios">
+<div class="max-w-[1280px] mx-auto px-margin">
+<!-- Section Header -->
+<div class="reveal-init flex flex-col md:flex-row md:items-end justify-between mb-space-xl gap-space-md">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline block mb-space-xs">01 • Ritual &amp; Oficio</span>
+<h2 class="font-headline-xl text-headline-xl uppercase text-primary tracking-tight">Carta de Servicios</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">
+          Cada sesión incluye diagnóstico personalizado, asesoría de imagen capilar, lavado con champú premium y peinado con pomada de fijación profesional.
+        </p>
+</div>
+<!-- Menu Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter"><!-- Servicio 1: Combo Insignia -->
+<div class="reveal-init group bg-surface-container-low border border-[#C5A059]/40 hover:border-[#DFB76C] p-space-lg flex flex-col justify-between shadow-md hover:shadow-[0_10px_30px_rgba(197,160,89,0.15)] hover:bg-surface-container hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden" style="transition-delay: 50ms;">
+<div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-[#C5A059] to-transparent opacity-70 group-hover:opacity-100 transition-opacity"></div>
+<div>
+<div class="flex items-start justify-between mb-space-md">
+<span class="font-label-sm text-label-sm uppercase tracking-widest bg-[#C5A059]/20 text-[#DFB76C] border border-[#C5A059]/40 px-space-sm py-1 font-bold group-hover:border-[#DFB76C] transition-colors">Insignia Distrito</span>
+<span class="font-title-lg text-title-lg text-[#DFB76C] font-semibold group-hover:scale-105 origin-right transition-transform">$450 <span class="font-label-sm text-label-sm text-outline uppercase">MXN</span></span>
+</div>
+<h3 class="font-headline-md text-headline-md uppercase text-primary mb-space-xs group-hover:text-[#DFB76C] transition-colors duration-200">Combo: Corte &amp; Barba</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-lg">
+              La experiencia integral. Corte a tijera/degradado al gusto, diseño de barba con toalla caliente al vapor, aceites balsámicos y sellado de poros.
+            </p>
+<div class="flex items-center gap-space-sm text-outline font-label-sm text-label-sm uppercase mb-space-lg">
+<span class="material-symbols-outlined text-base text-[#DFB76C] group-hover:rotate-12 transition-transform duration-300">timer</span>
+<span>60 Minutos</span>
+<span>•</span>
+<span class="text-[#DFB76C]">Bebida Incluida</span>
+</div>
+</div>
+<button class="gold-shimmer w-full py-3 bg-surface-container-high text-[#DFB76C] border border-[#C5A059]/30 font-label-lg text-label-lg uppercase tracking-wider text-center group-hover:bg-[#C5A059] group-hover:text-stone-950 group-hover:font-bold group-hover:shadow-[0_0_15px_rgba(197,160,89,0.35)] active:scale-[0.98] transition-all duration-200" onclick="seleccionarServicio('Combo: Corte &amp; Barba')">
+            Seleccionar Servicio
+          </button>
+</div>
+<!-- Servicio 2: Corte Clásico -->
+<div class="reveal-init group bg-surface-container-low border border-white/5 hover:border-[#C5A059]/60 p-space-lg flex flex-col justify-between shadow-md hover:shadow-[0_10px_25px_rgba(0,0,0,0.5)] hover:bg-surface-container hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden" style="transition-delay: 150ms;">
+<div class="absolute inset-x-0 top-0 h-[2px] bg-[#C5A059] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+<div>
+<div class="flex items-start justify-between mb-space-md">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline group-hover:text-on-surface transition-colors">Tradicional</span>
+<span class="font-title-lg text-title-lg text-[#DFB76C] font-semibold group-hover:scale-105 origin-right transition-transform">$260 <span class="font-label-sm text-label-sm text-outline uppercase">MXN</span></span>
+</div>
+<h3 class="font-headline-md text-headline-md uppercase text-primary mb-space-xs group-hover:text-[#DFB76C] transition-colors duration-200">Corte Clásico Distrito</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-lg">
+              Degradados pulidos (Fade), taper contemporáneo o corte puramente a tijera. Incluye perfilado de cuello a navaja, lavado refrescante y estilización final.
+            </p>
+<div class="flex items-center gap-space-sm text-outline font-label-sm text-label-sm uppercase mb-space-lg">
+<span class="material-symbols-outlined text-base group-hover:text-[#DFB76C] transition-colors duration-300">timer</span>
+<span>40 Minutos</span>
+<span>•</span>
+<span>Lavado &amp; Styling</span>
+</div>
+</div>
+<button class="w-full py-3 bg-surface-container-high text-on-surface font-label-lg text-label-lg uppercase tracking-wider text-center group-hover:text-stone-950 group-hover:bg-[#C5A059] group-hover:font-bold group-hover:shadow-[0_0_15px_rgba(197,160,89,0.3)] active:scale-[0.98] transition-all duration-200" onclick="seleccionarServicio('Corte Clásico Distrito')">
+            Seleccionar Servicio
+          </button>
+</div>
+<!-- Servicio 3: Ritual de Barba -->
+<div class="reveal-init group bg-surface-container-low border border-white/5 hover:border-[#C5A059]/60 p-space-lg flex flex-col justify-between shadow-md hover:shadow-[0_10px_25px_rgba(0,0,0,0.5)] hover:bg-surface-container hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden" style="transition-delay: 250ms;">
+<div class="absolute inset-x-0 top-0 h-[2px] bg-[#C5A059] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+<div>
+<div class="flex items-start justify-between mb-space-md">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline group-hover:text-on-surface transition-colors">Tratamiento</span>
+<span class="font-title-lg text-title-lg text-[#DFB76C] font-semibold group-hover:scale-105 origin-right transition-transform">$240 <span class="font-label-sm text-label-sm text-outline uppercase">MXN</span></span>
+</div>
+<h3 class="font-headline-md text-headline-md uppercase text-primary mb-space-xs group-hover:text-[#DFB76C] transition-colors duration-200">Ritual de Barba</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-lg">
+              Definición geométrica con navaja de acero templado, toalla caliente perfumada con aceites esenciales de eucalipto, loción calmante y fijador de barba.
+            </p>
+<div class="flex items-center gap-space-sm text-outline font-label-sm text-label-sm uppercase mb-space-lg">
+<span class="material-symbols-outlined text-base text-[#DFB76C] group-hover:rotate-12 transition-transform duration-300">timer</span>
+<span>35 Minutos</span>
+<span>•</span>
+<span>Toalla al Vapor</span>
+</div>
+</div>
+<button class="w-full py-3 bg-surface-container-high text-on-surface font-label-lg text-label-lg uppercase tracking-wider text-center group-hover:text-stone-950 group-hover:bg-[#C5A059] group-hover:font-bold group-hover:shadow-[0_0_15px_rgba(197,160,89,0.3)] active:scale-[0.98] transition-all duration-200" onclick="seleccionarServicio('Ritual de Barba')">
+            Seleccionar Servicio
+          </button>
+</div>
+<!-- Servicio 4: Mascarilla & Limpieza -->
+<div class="reveal-init group bg-surface-container-low border border-white/5 hover:border-[#C5A059]/60 p-space-lg flex flex-col justify-between shadow-md hover:shadow-[0_10px_25px_rgba(0,0,0,0.5)] hover:bg-surface-container hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden" style="transition-delay: 100ms;">
+<div class="absolute inset-x-0 top-0 h-[2px] bg-[#C5A059] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+<div>
+<div class="flex items-start justify-between mb-space-md">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline group-hover:text-on-surface transition-colors">Facial</span>
+<span class="font-title-lg text-title-lg text-[#DFB76C] font-semibold group-hover:scale-105 origin-right transition-transform">$180 <span class="font-label-sm text-label-sm text-outline uppercase">MXN</span></span>
+</div>
+<h3 class="font-headline-md text-headline-md uppercase text-primary mb-space-xs group-hover:text-[#DFB76C] transition-colors duration-200">Mascarilla Negra &amp; Facial</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-lg">
+              Exfoliación cutánea para remoción de impurezas y puntos negros, apertura de poros al vapor y tónico astringente revitalizante de mentol.
+            </p>
+<div class="flex items-center gap-space-sm text-outline font-label-sm text-label-sm uppercase mb-space-lg">
+<span class="material-symbols-outlined text-base group-hover:text-[#DFB76C] transition-colors duration-300">timer</span>
+<span>25 Minutos</span>
+<span>•</span>
+<span>Detox Cutáneo</span>
+</div>
+</div>
+<button class="w-full py-3 bg-surface-container-high text-on-surface font-label-lg text-label-lg uppercase tracking-wider text-center group-hover:text-stone-950 group-hover:bg-[#C5A059] group-hover:font-bold group-hover:shadow-[0_0_15px_rgba(197,160,89,0.3)] active:scale-[0.98] transition-all duration-200" onclick="seleccionarServicio('Mascarilla Negra &amp; Facial')">
+            Seleccionar Servicio
+          </button>
+</div>
+<!-- Servicio 5: Corte Infantil & Juvenil -->
+<div class="reveal-init group bg-surface-container-low border border-white/5 hover:border-[#C5A059]/60 p-space-lg flex flex-col justify-between shadow-md hover:shadow-[0_10px_25px_rgba(0,0,0,0.5)] hover:bg-surface-container hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden" style="transition-delay: 200ms;">
+<div class="absolute inset-x-0 top-0 h-[2px] bg-[#C5A059] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+<div>
+<div class="flex items-start justify-between mb-space-md">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline group-hover:text-on-surface transition-colors">Kids &amp; Junior</span>
+<span class="font-title-lg text-title-lg text-[#DFB76C] font-semibold group-hover:scale-105 origin-right transition-transform">$220 <span class="font-label-sm text-label-sm text-outline uppercase">MXN</span></span>
+</div>
+<h3 class="font-headline-md text-headline-md uppercase text-primary mb-space-xs group-hover:text-[#DFB76C] transition-colors duration-200">Corte Juvenil / Infantil</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-lg">
+              Atención paciente y acabados modernos adaptados a niños y adolescentes. Diseños limpios, texturizados o clásicos con la misma disciplina de oficio.
+            </p>
+<div class="flex items-center gap-space-sm text-outline font-label-sm text-label-sm uppercase mb-space-lg">
+<span class="material-symbols-outlined text-base group-hover:text-[#DFB76C] transition-colors duration-300">timer</span>
+<span>35 Minutos</span>
+<span>•</span>
+<span>Peinado Incluido</span>
+</div>
+</div>
+<button class="w-full py-3 bg-surface-container-high text-on-surface font-label-lg text-label-lg uppercase tracking-wider text-center group-hover:text-stone-950 group-hover:bg-[#C5A059] group-hover:font-bold group-hover:shadow-[0_0_15px_rgba(197,160,89,0.3)] active:scale-[0.98] transition-all duration-200" onclick="seleccionarServicio('Corte Juvenil / Infantil')">
+            Seleccionar Servicio
+          </button>
+</div>
+<!-- Servicio 6: Distrito VIP Completo -->
+<div class="reveal-init group bg-surface-container border border-[#C5A059]/50 hover:border-[#DFB76C] p-space-lg flex flex-col justify-between shadow-xl hover:shadow-[0_12px_35px_rgba(197,160,89,0.22)] hover:bg-surface-container-high hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden" style="transition-delay: 300ms;">
+<div class="absolute top-0 right-0 bg-[#C5A059] text-stone-950 font-label-sm text-label-sm px-3 py-1 uppercase tracking-widest font-bold shadow-md group-hover:bg-[#DFB76C] transition-colors">
+            All-Inclusive
+          </div>
+<div>
+<div class="flex items-start justify-between mb-space-md">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-[#DFB76C] flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#DFB76C] animate-ping"></span>
+  Experiencia Total
+</span>
+<span class="font-title-lg text-title-lg text-[#DFB76C] font-bold group-hover:scale-105 origin-right transition-transform">$600 <span class="font-label-sm text-label-sm text-outline uppercase">MXN</span></span>
+</div>
+<h3 class="font-headline-md text-headline-md uppercase text-primary mb-space-xs group-hover:text-[#DFB76C] transition-colors duration-200">Distrito Grand Ritual</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-lg">
+              Corte insignia, ritual de barba completo, mascarilla de carbón activado, masaje capilar relajante, lavado profundo y bebida de elección.
+            </p>
+<div class="flex items-center gap-space-sm text-outline font-label-sm text-label-sm uppercase mb-space-lg">
+<span class="material-symbols-outlined text-base text-[#DFB76C] group-hover:rotate-12 transition-transform duration-300">timer</span>
+<span>80 Minutos</span>
+<span>•</span>
+<span class="text-[#DFB76C]">Protocolo Completo</span>
+</div>
+</div>
+<button class="gold-shimmer w-full py-3 bg-[#C5A059] text-stone-950 font-bold font-label-lg text-label-lg uppercase tracking-wider text-center hover:bg-[#D4AF37] hover:shadow-[0_0_20px_rgba(197,160,89,0.5)] active:scale-[0.98] transition-all duration-200 shadow-lg" onclick="seleccionarServicio('Distrito Grand Ritual')">
+            Reservar Protocolo VIP
+          </button>
+</div></div>
+</div>
+</section>
+<!-- LA EXPERIENCIA DISTRITO (EDITORIAL BENTO SHOWCASE) -->
+<section class="w-full bg-surface-container-lowest py-space-xl scroll-mt-24" id="experiencia">
+<div class="max-w-[1280px] mx-auto px-margin">
+<div class="reveal-init flex flex-col items-center text-center max-w-2xl mx-auto mb-space-xl">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline block mb-space-xs">02 • El Santuario</span>
+<h2 class="font-headline-xl text-headline-xl uppercase text-primary tracking-tight mb-space-md">La Experiencia Distrito</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          No es solo un corte, es una pausa en el ajetreo sonorense. Creamos un ambiente donde el buen gusto, la buena plática y el respeto por el oficio son la regla.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Feature 1: Main Photo -->
+<div class="reveal-init md:col-span-8 group bg-surface-container relative min-h-[380px] overflow-hidden shadow-lg flex flex-col justify-end p-space-xl border border-white/5 hover:border-[#C5A059]/40 transition-all duration-300" style="transition-delay: 50ms;">
+<img class="absolute inset-0 w-full h-full object-cover grayscale brightness-75 group-hover:scale-105 group-hover:brightness-90 transition-all duration-700 ease-out" data-alt="Monochrome cinematic interior shot of an upscale gentlemen's barbershop in Hermosillo with heavy vintage leather barber chairs, dark wood cabinetry, brushed metal mirrors, atmospheric warm lighting, and a client relaxing with a hot towel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPP2J_HbpysO-DlcdJRdeLYcFCYDN2ZTcxVYEZC_XTuCug5G10-v2OEUHskhpRfMdYVCNF2NCrZTbzlXqzopAgh4deeZz-R61IqnypZ6VxSj_t7-Ko1WG8Xp9bbUGcnZLgODeblZcgxv6WsjdJ5pGfUn_tjNUjCWi8m4JlhrmXsztSoIsRYJZ-tWn5dKmGAPG3NgaV0kVdLCOPpQQacpmlMHpeI_E1-QI7qm5o8hVF"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/40 to-transparent"></div>
+<div class="relative z-10 max-w-lg transition-transform duration-300 group-hover:-translate-y-1">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary block mb-space-xs group-hover:text-[#DFB76C] transition-colors">Mobiliario de Época &amp; Confort</span>
+<h3 class="font-headline-lg text-headline-lg uppercase text-primary mb-space-sm group-hover:text-primary transition-colors">Sillas de Piel &amp; Precisión Ergonómica</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Espacios pensados para que te desconectes por completo durante tu sesión de afeitado o corte.
+            </p>
+</div>
+</div>
+<!-- Feature 2: Bar / Hospitality -->
+<div class="reveal-init md:col-span-4 group bg-surface-container-high p-space-xl flex flex-col justify-between shadow-lg border border-white/5 hover:border-[#C5A059]/40 hover:-translate-y-1 transition-all duration-300" style="transition-delay: 150ms;">
+<div>
+<div class="w-12 h-12 bg-surface-container flex items-center justify-center text-primary mb-space-lg group-hover:bg-[#C5A059] group-hover:text-stone-950 transition-colors duration-300 shadow-md">
+<span class="material-symbols-outlined text-2xl group-hover:rotate-12 transition-transform duration-300">local_bar</span>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline block mb-space-xs group-hover:text-[#DFB76C] transition-colors">Hospitalidad Sonorense</span>
+<h3 class="font-headline-md text-headline-md uppercase text-primary mb-space-md">Cerveza &amp; Espresso de Cortesía</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Al cruzar nuestras puertas en Las Quintas, una cerveza artesanal fría o un espresso recién molido te esperan sin costo adicional.
+            </p>
+</div>
+<div class="pt-space-md flex items-center gap-space-xs text-secondary font-label-sm text-label-sm uppercase tracking-wider group-hover:text-[#DFB76C] transition-colors">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+<span>Incluido en todas tus visitas</span>
+</div>
+</div>
+<!-- Feature 3: Instruments & Blades -->
+<div class="reveal-init md:col-span-4 group bg-surface-container-high p-space-xl flex flex-col justify-between shadow-lg border border-white/5 hover:border-[#C5A059]/40 hover:-translate-y-1 transition-all duration-300" style="transition-delay: 100ms;">
+<div>
+<div class="w-12 h-12 bg-surface-container flex items-center justify-center text-primary mb-space-lg group-hover:bg-[#C5A059] group-hover:text-stone-950 transition-colors duration-300 shadow-md">
+<span class="material-symbols-outlined text-2xl group-hover:-rotate-12 transition-transform duration-300">content_cut</span>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline block mb-space-xs group-hover:text-[#DFB76C] transition-colors">Higiene &amp; Maestría</span>
+<h3 class="font-headline-md text-headline-md uppercase text-primary mb-space-md">Acero Templado &amp; Esterilización</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Navajas desechables por cliente, esterilización con rayos UV y productos cosméticos de grado profesional para piel sensible.
+            </p>
+</div>
+<div class="pt-space-md flex items-center gap-space-xs text-secondary font-label-sm text-label-sm uppercase tracking-wider group-hover:text-[#DFB76C] transition-colors">
+<span class="material-symbols-outlined text-sm">sanitizer</span>
+<span>Protocolo de higiene estricto</span>
+</div>
+</div>
+<!-- Feature 4: Atmosphere & Acoustics -->
+<div class="reveal-init md:col-span-8 group bg-surface-container relative min-h-[280px] overflow-hidden shadow-lg flex flex-col justify-end p-space-xl border border-white/5 hover:border-[#C5A059]/40 transition-all duration-300" style="transition-delay: 200ms;">
+<img class="absolute inset-0 w-full h-full object-cover grayscale brightness-70 group-hover:scale-105 group-hover:brightness-85 transition-all duration-700 ease-out" data-alt="Close up dark aesthetic photography of professional barber shears, imported pomades in amber glass jars, and fine horsehair shave brush arranged neatly on an absolute black slate counter." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1uJAAnCRsdbu_xh4dQBfc8NWV-OWNvBiSIPMESk4sNA730rRqLIAta5KOzXRtPmJIUWMi4CCzFyS0qL25F4dKMQz5g_ziYRvDjcT9L2ZjUBDAwo20aiVWAemJuqLIq2v8_cYGtc8dFfR5e-3vaIarPFuUb6OWLgbJySCt7dQ2BaFhS2Gapdi-tOtUUiY7fC08eXXaMc50afnE73oR2aN8lqnYHhLJuyrcDH0jVHCt"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/50 to-transparent"></div>
+<div class="relative z-10 transition-transform duration-300 group-hover:-translate-y-1">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary block mb-space-xs group-hover:text-[#DFB76C] transition-colors">Cultura &amp; Atmósfera</span>
+<h3 class="font-headline-lg text-headline-lg uppercase text-primary mb-space-xs">Música Curada &amp; Cero Prisas</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl">
+              Sin aglomeraciones ni filas caóticas. Atendemos rigurosamente bajo cita programada para asegurar el tiempo que tu corte merece.
+            </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FORMULARIO DE RESERVACIÓN INTERACTIVO -->
+<section class="w-full bg-background py-space-xl scroll-mt-24" id="reservacion">
+<div class="max-w-[1280px] mx-auto px-margin">
+<div class="reveal-init bg-surface-container-low shadow-2xl p-space-lg md:p-space-xl border border-white/5 hover:border-[#C5A059]/30 transition-all duration-300">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Booking Left Info -->
+<div class="lg:col-span-5 flex flex-col justify-between">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline block mb-space-xs">03 • Reserva Tu Espacio</span>
+<h2 class="font-headline-xl text-headline-xl uppercase text-primary tracking-tight mb-space-md">Agendar Cita en Distrito</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-lg">
+                Elige tu ritual, barbero y horario conveniente. Al enviar, serás redirigido directamente a nuestro WhatsApp oficial con los detalles listos para confirmación instantánea.
+              </p>
+<!-- Quick direct phone -->
+<div class="group bg-surface-container p-space-md mb-space-md flex items-center gap-space-md border border-white/5 hover:border-[#C5A059]/40 transition-all duration-200">
+<span class="material-symbols-outlined text-primary text-2xl group-hover:text-[#DFB76C] transition-colors">support_agent</span>
+<div>
+<p class="font-label-sm text-label-sm uppercase text-outline">Atención Telefónica Directa</p>
+<a class="font-label-sm text-label-sm uppercase tracking-wider text-[#DFB76C] bg-transparent border border-[#C5A059]/50 px-space-md py-1.5 hover:bg-[#C5A059] hover:text-stone-950 font-bold hover:shadow-[0_0_12px_rgba(197,160,89,0.3)] transition-all inline-block mt-1" href="tel:+526621409621">+52 (662) 140 9621</a>
+</div>
+</div>
+<!-- Location recap -->
+<div class="group bg-surface-container p-space-md flex items-center gap-space-md border border-white/5 hover:border-[#C5A059]/40 transition-all duration-200">
+<span class="material-symbols-outlined text-primary text-2xl group-hover:text-[#DFB76C] transition-colors">pin_drop</span>
+<div>
+<p class="font-label-sm text-label-sm uppercase text-outline">Sucursal Las Quintas</p>
+<p class="font-body-md text-body-md text-on-surface">Bv. Paseo de las Quintas 71A, HMO</p>
+</div>
+</div>
+</div>
+<!-- Guarantee Note -->
+<div class="pt-space-lg hidden lg:block">
+<p class="font-label-sm text-label-sm uppercase tracking-widest text-outline">
+                Cancelaciones con 2 horas de anticipación • Estacionamiento al frente
+              </p>
+</div>
+</div>
+<!-- Booking Right Form -->
+<div class="lg:col-span-7 bg-surface-container-high/60 p-space-md md:p-space-lg border border-white/5">
+<form class="space-y-space-md" id="bookingForm" onsubmit="enviarWhatsApp(event)">
+<!-- Servicio Selector -->
+<div class="relative group">
+<label class="block font-label-lg text-label-lg uppercase tracking-wider text-primary mb-space-xs group-focus-within:text-[#DFB76C] transition-colors duration-200" for="formServicio">1. Servicio Deseado</label>
+<select class="w-full bg-surface-container-lowest text-on-surface px-space-md py-3 border border-white/10 focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/30 focus:outline-none transition-all duration-200 font-body-md" id="formServicio" required="">
+<option value="Combo: Corte &amp; Barba ($450 MXN)">Combo: Corte &amp; Barba ($450 MXN)</option>
+<option value="Corte Clásico Distrito ($260 MXN)">Corte Clásico Distrito ($260 MXN)</option>
+<option value="Ritual de Barba ($240 MXN)">Ritual de Barba Tradicional ($240 MXN)</option>
+<option value="Mascarilla Negra &amp; Facial ($180 MXN)">Mascarilla Negra &amp; Facial ($180 MXN)</option>
+<option value="Corte Juvenil / Infantil ($220 MXN)">Corte Juvenil / Infantil ($220 MXN)</option>
+<option value="Distrito Grand Ritual ($600 MXN)">Distrito Grand Ritual VIP ($600 MXN)</option>
+</select>
+</div>
+<!-- Barbero Selector & Turno -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="relative group">
+<label class="block font-label-lg text-label-lg uppercase tracking-wider text-primary mb-space-xs group-focus-within:text-[#DFB76C] transition-colors duration-200" for="formBarbero">2. Barbero Preferido</label>
+<select class="w-full bg-surface-container-lowest text-on-surface px-space-md py-3 border border-white/10 focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/30 focus:outline-none transition-all duration-200 font-body-md" id="formBarbero">
+<option value="Cualquier Maestro Barbero Disponible">Primer Barbero Disponible</option>
+<option value="Maestro Barbero Senior">Barbero Senior (Especialista Fade)</option>
+<option value="Maestro Barbero Ritualista">Barbero Ritualista (Especialista Barba)</option>
+</select>
+</div>
+<div class="relative group">
+<label class="block font-label-lg text-label-lg uppercase tracking-wider text-primary mb-space-xs group-focus-within:text-[#DFB76C] transition-colors duration-200" for="formFecha">3. Fecha de Cita</label>
+<input class="w-full bg-surface-container-lowest text-on-surface px-space-md py-3 border border-white/10 focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/30 focus:outline-none transition-all duration-200 font-body-md" id="formFecha" required="" type="date"/>
+</div>
+</div>
+<!-- Horario & Datos de Contacto -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="relative group">
+<label class="block font-label-lg text-label-lg uppercase tracking-wider text-primary mb-space-xs group-focus-within:text-[#DFB76C] transition-colors duration-200" for="formHora">4. Hora Sugerida</label>
+<select class="w-full bg-surface-container-lowest text-on-surface px-space-md py-3 border border-white/10 focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/30 focus:outline-none transition-all duration-200 font-body-md" id="formHora" required="">
+<option value="10:00 AM">10:00 AM</option>
+<option value="11:00 AM">11:00 AM</option>
+<option value="12:00 PM">12:00 PM</option>
+<option value="1:00 PM">01:00 PM</option>
+<option value="2:00 PM">02:00 PM</option>
+<option value="3:00 PM">03:00 PM</option>
+<option value="4:00 PM">04:00 PM</option>
+<option value="5:00 PM">05:00 PM</option>
+<option value="6:00 PM">06:00 PM</option>
+<option value="7:00 PM">07:00 PM</option>
+</select>
+</div>
+<div class="relative group">
+<label class="block font-label-lg text-label-lg uppercase tracking-wider text-primary mb-space-xs group-focus-within:text-[#DFB76C] transition-colors duration-200" for="formNombre">5. Tu Nombre Completo</label>
+<input class="w-full bg-surface-container-lowest text-on-surface px-space-md py-3 border border-white/10 focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/30 focus:outline-none transition-all duration-200 font-body-md" id="formNombre" placeholder="Ej. Carlos Valenzuela" required="" type="text"/>
+</div>
+</div>
+<!-- Teléfono -->
+<div class="relative group">
+<label class="block font-label-lg text-label-lg uppercase tracking-wider text-primary mb-space-xs group-focus-within:text-[#DFB76C] transition-colors duration-200" for="formTelefono">6. Teléfono Celular (WhatsApp)</label>
+<input class="w-full bg-surface-container-lowest text-on-surface px-space-md py-3 border border-white/10 focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/30 focus:outline-none transition-all duration-200 font-body-md" id="formTelefono" placeholder="Ej. 662 123 4567" required="" type="tel"/>
+</div>
+<!-- Submit CTA -->
+<div class="pt-space-sm">
+<button class="gold-shimmer w-full bg-[#C5A059] text-stone-950 font-bold font-label-lg text-label-lg uppercase py-4 shadow-xl hover:bg-[#D4AF37] hover:shadow-[0_0_25px_rgba(197,160,89,0.5)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-space-sm group/btn" type="submit">
+<span class="material-symbols-outlined text-xl group-hover/btn:translate-x-1 transition-transform duration-200">send</span>
+<span>Confirmar Reservación por WhatsApp</span>
+</button>
+<p class="font-label-sm text-label-sm text-outline text-center mt-space-xs">
+                  Te responderemos al instante para confirmar disponibilidad exacta del sillón.
+                </p>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- HORARIOS & UBICACIÓN EXACTA (HERMOSILLO, LAS QUINTAS) -->
+<section class="w-full bg-surface-container-lowest py-space-xl scroll-mt-24" id="horarios-ubicacion">
+<div class="max-w-[1280px] mx-auto px-margin">
+<!-- Section Header -->
+<div class="reveal-init flex flex-col md:flex-row md:items-end justify-between mb-space-xl gap-space-md">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline block mb-space-xs">04 • Punto de Encuentro</span>
+<h2 class="font-headline-xl text-headline-xl uppercase text-primary tracking-tight">Horarios &amp; Ubicación</h2>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#DFB76C] opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-[#DFB76C]"></span>
+</span>
+<span class="font-label-lg text-label-lg uppercase text-primary">Hermosillo, Sonora</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-stretch">
+<!-- Tabla de Horarios -->
+<div class="reveal-init lg:col-span-5 bg-surface-container p-space-lg md:p-space-xl flex flex-col justify-between shadow-lg border border-white/5 hover:border-[#C5A059]/30 transition-all duration-300" style="transition-delay: 50ms;">
+<div>
+<div class="flex items-center gap-space-sm mb-space-md">
+<span class="material-symbols-outlined text-primary text-[#DFB76C]">calendar_clock</span>
+<h3 class="font-headline-md text-headline-md uppercase text-primary">Horarios de Atención</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-lg">
+              Planifica tu ritual con tiempo. Se recomienda agendar con al menos 24 horas de antelación para fines de semana.
+            </p>
+<div class="space-y-space-sm font-body-md text-body-md">
+<!-- Lunes, Miércoles y Viernes -->
+<div class="flex items-center justify-between p-space-sm bg-surface-container-high hover:bg-surface-container-highest transition-colors duration-200">
+<span class="font-title-lg text-title-lg text-primary">Lunes, Mié &amp; Vie</span>
+<span class="text-on-surface font-semibold text-[#DFB76C]">10:00 AM – 8:00 PM</span>
+</div>
+<!-- Martes y Jueves -->
+<div class="flex items-center justify-between p-space-sm bg-surface-container-high hover:bg-surface-container-highest transition-colors duration-200">
+<span class="font-title-lg text-title-lg text-primary">Martes &amp; Jueves</span>
+<span class="text-on-surface font-semibold text-[#DFB76C]">9:00 AM – 7:00 PM</span>
+</div>
+<!-- Sábado -->
+<div class="flex items-center justify-between p-space-sm bg-surface-container-high hover:bg-surface-container-highest transition-colors duration-200">
+<span class="font-title-lg text-title-lg text-primary">Sábado</span>
+<span class="text-on-surface font-semibold text-[#DFB76C]">10:00 AM – 6:00 PM</span>
+</div>
+<!-- Domingo -->
+<div class="flex items-center justify-between p-space-sm bg-surface-container-high hover:bg-surface-container-highest transition-colors duration-200">
+<span class="font-title-lg text-title-lg text-primary">Domingo</span>
+<span class="text-on-surface font-semibold text-[#DFB76C]">12:00 PM – 4:00 PM</span>
+</div>
+</div>
+</div>
+<!-- Teléfono y CTA directa -->
+<div class="pt-space-lg mt-space-md bg-surface-container-lowest p-space-md border border-white/5">
+<p class="font-label-sm text-label-sm uppercase tracking-widest text-outline mb-1">Dudas o Urgencias</p>
+<div class="flex items-center justify-between">
+<span class="font-title-lg text-title-lg text-primary">+52 662 140 9621</span>
+<a class="font-label-sm text-label-sm uppercase tracking-wider text-[#DFB76C] bg-transparent border border-[#C5A059]/50 px-space-md py-1.5 hover:bg-[#C5A059] hover:text-stone-950 font-bold hover:shadow-[0_0_12px_rgba(197,160,89,0.3)] transition-all" href="tel:+526621409621">
+                Llamar Ahora
+              </a>
+</div>
+</div>
+</div>
+<!-- Tarjeta de Mapa y Dirección Exacta -->
+<div class="reveal-init lg:col-span-7 bg-surface-container-low flex flex-col justify-between shadow-lg overflow-hidden border border-white/5 hover:border-[#C5A059]/30 transition-all duration-300" style="transition-delay: 150ms;">
+<!-- Styled Map Trigger with data-location -->
+<div class="w-full h-80 min-h-[300px] bg-cover bg-center relative flex items-end p-space-md group/map overflow-hidden" data-location="Bv. Paseo de las Quintas 71A, Las Quintas, Hermosillo, Sonora, Mexico" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCCjd6SWcE4p45ta9dzCCap1tkNpsxYFsw_rX5GK0xnWSju1yO3Th7sokL08DZPpURaSLYysugEmOwyT0yVHyHAs6uMTEOY5m3hdWRiAvjmD5sRXqqOLvtGs9FsO4vccRxucZlSOyoxwNGyjyPxhUHVDvSYrUfJK7CDLnZZhMEr5Y3-XT30l1DC9DAfMWLOF6GeReYH_FgO3dDHctZo8glIV5o9BedM413xTPgwHnI8')">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/30 to-transparent"></div>
+<div class="relative z-10 bg-surface-container-lowest/90 backdrop-blur-md p-space-md max-w-md shadow-xl border border-white/10 group-hover/map:border-[#C5A059]/50 transition-colors">
+<div class="flex items-center gap-space-xs text-[#D4AF37]">
+<span class="material-symbols-outlined text-base animate-bounce">location_on</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider font-bold">Ubicación Exacta</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-medium leading-snug">
+                Bv. Paseo de las Quintas 71A, Colonia Las Quintas, C.P. 83240, Hermosillo, Sonora.
+              </p>
+</div>
+</div>
+<!-- Bottom Action Strip -->
+<div class="p-space-lg md:p-space-xl flex flex-col sm:flex-row sm:items-center justify-between gap-space-md bg-surface-container">
+<div>
+<h4 class="font-title-lg text-title-lg uppercase text-primary">Zona Las Quintas</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                Fácil acceso vial, zona segura y cajones de estacionamiento disponibles.
+              </p>
+</div>
+<div class="flex items-center gap-space-sm">
+<a class="gold-shimmer inline-flex items-center gap-space-xs bg-[#C5A059] text-stone-950 font-bold font-label-lg text-label-lg uppercase px-space-lg py-3 shadow-md hover:bg-[#D4AF37] hover:shadow-[0_0_15px_rgba(197,160,89,0.4)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200" href="https://maps.google.com/?q=Bv.+Paseo+de+las+Quintas+71A,+Las+Quintas,+83240+Hermosillo,+Son." rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-base">directions</span>
+<span>Cómo Llegar (Maps)</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- TESTIMONIOS & REPUTACIÓN LOCAL -->
+<section class="w-full bg-background py-space-xl">
+<div class="max-w-[1280px] mx-auto px-margin">
+<div class="reveal-init flex flex-col md:flex-row md:items-end justify-between mb-space-xl gap-space-md">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline block mb-space-xs">05 • La Comunidad</span>
+<h2 class="font-headline-xl text-headline-xl uppercase text-primary tracking-tight">Visto por Nuestros Clientes</h2>
+</div>
+<div class="flex items-center gap-space-xs text-primary">
+<span class="material-symbols-outlined text-xl text-[#DFB76C] transition-transform duration-300 hover:scale-125" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xl text-[#DFB76C] transition-transform duration-300 hover:scale-125" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xl text-[#DFB76C] transition-transform duration-300 hover:scale-125" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xl text-[#DFB76C] transition-transform duration-300 hover:scale-125" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-xl text-[#DFB76C] transition-transform duration-300 hover:scale-125" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-lg text-label-lg uppercase ml-2 text-on-surface">5.0 en Google Reviews</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Review 1 -->
+<div class="reveal-init group bg-surface-container-low p-space-lg shadow-md flex flex-col justify-between border border-white/5 hover:border-[#C5A059]/40 hover:-translate-y-1.5 transition-all duration-300" style="transition-delay: 50ms;">
+<div>
+<div class="flex items-center gap-1 text-[#D4AF37] mb-space-md">
+<span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform duration-200" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform duration-200" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform duration-200" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform duration-200" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform duration-200" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-space-lg italic group-hover:text-primary transition-colors">
+              "La mejor barbería en Hermosillo por mucho. La puntualidad es impecable, el ritual de toalla caliente para la barba te reinicia la semana y la atención en Las Quintas es de otro nivel."
+            </p>
+</div>
+<div>
+<p class="font-title-lg text-title-lg text-primary group-hover:text-[#DFB76C] transition-colors">Alejandro Ruiz G.</p>
+<p class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Cliente Habitual • Combo Insignia</p>
+</div>
+</div>
+<!-- Review 2 -->
+<div class="reveal-init group bg-surface-container-low p-space-lg shadow-md flex flex-col justify-between border border-white/5 hover:border-[#C5A059]/40 hover:-translate-y-1.5 transition-all duration-300" style="transition-delay: 150ms;">
+<div>
+<div class="flex items-center gap-1 text-[#D4AF37] mb-space-md">
+<span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform duration-200" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform duration-200" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform duration-200" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform duration-200" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform duration-200" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-space-lg italic group-hover:text-primary transition-colors">
+              "Llevo a mi hijo de 12 años y a mí al mismo tiempo. Tienen una paciencia y precisión que no encuentras en cadenas comerciales. Además te reciben con un café o cerveza de cortesía."
+            </p>
+</div>
+<div>
+<p class="font-title-lg text-title-lg text-primary group-hover:text-[#DFB76C] transition-colors">Ing. Fernando Munguía</p>
+<p class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Cliente Las Quintas • Corte y Fade</p>
+</div>
+</div>
+<!-- Review 3 -->
+<div class="reveal-init group bg-surface-container-low p-space-lg shadow-md flex flex-col justify-between border border-white/5 hover:border-[#C5A059]/40 hover:-translate-y-1.5 transition-all duration-300" style="transition-delay: 250ms;">
+<div>
+<div class="flex items-center gap-1 text-[#D4AF37] mb-space-md">
+<span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform duration-200" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform duration-200" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform duration-200" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform duration-200" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform duration-200" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-space-lg italic group-hover:text-primary transition-colors">
+              "Diseño de navaja libre y perfilado quirúrgico. Si tienes barba tupida y piel sensible, este es el lugar. La estética del lugar es súper sobria y elegante."
+            </p>
+</div>
+<div>
+<p class="font-title-lg text-title-lg text-primary group-hover:text-[#DFB76C] transition-colors">Rodrigo Astiazarán</p>
+<p class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Cliente Frecuente • Ritual Barba</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- BANNER FINAL CTA -->
+<section class="w-full bg-surface-container-high py-space-xl border-t border-white/5">
+<div class="max-w-[1280px] mx-auto px-margin">
+<div class="reveal-init flex flex-col lg:flex-row items-center justify-between gap-space-lg text-center lg:text-left">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline block mb-space-xs">Distrito Barbería • Paseo de las Quintas 71A</span>
+<h2 class="font-headline-xl text-headline-xl uppercase text-primary tracking-tight">Tu Estilo No Se Deja Al Azar</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+            Reserva hoy mismo tu espacio y experimenta la diferencia del auténtico corte sonorense de tradición.
+          </p>
+</div>
+<div class="flex flex-wrap items-center justify-center gap-space-md">
+<a class="gold-shimmer inline-flex items-center gap-space-sm bg-[#C5A059] text-stone-950 font-bold font-label-lg text-label-lg uppercase px-space-xl py-4 shadow-xl hover:bg-[#D4AF37] hover:shadow-[0_0_25px_rgba(197,160,89,0.5)] hover:-translate-y-1 active:translate-y-0 transition-all duration-200" href="https://wa.me/526621409621?text=Hola%20Distrito%20Barber%C3%ADa,%20quiero%20hacer%20una%20reserva" rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-lg">chat</span>
+<span>Mensaje WhatsApp</span>
+</a>
+<a class="inline-flex items-center gap-space-sm bg-surface-container-lowest text-[#DFB76C] border border-[#C5A059]/40 font-label-lg text-label-lg uppercase px-space-xl py-4 shadow-md hover:bg-[#C5A059]/15 hover:border-[#C5A059] hover:shadow-[0_0_15px_rgba(197,160,89,0.2)] hover:-translate-y-1 active:translate-y-0 transition-all duration-200" href="tel:+526621409621">
+<span class="material-symbols-outlined text-lg">call</span>
+<span>+52 662 140 9621</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+  // Helper interactivo para enlazar la selección de servicios de la carta con el formulario con feedback visual
+  function seleccionarServicio(nombreServicio) {
+    const selector = document.getElementById('formServicio');
+    if (selector) {
+      for (let i = 0; i < selector.options.length; i++) {
+        if (selector.options[i].text.includes(nombreServicio)) {
+          selector.selectedIndex = i;
+          break;
+        }
+      }
+      selector.classList.add('ring-2', 'ring-[#DFB76C]', 'bg-surface-container-high');
+      setTimeout(() => {
+        selector.classList.remove('ring-2', 'ring-[#DFB76C]', 'bg-surface-container-high');
+      }, 1600);
+    }
+    const targetSection = document.getElementById('reservacion');
+    if (targetSection) {
+      targetSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  // IntersectionObserver para reveal suave de secciones y elementos
+  document.addEventListener('DOMContentLoaded', () => {
+    // Set default date for today in booking form
+    const dateInput = document.getElementById('formFecha');
+    if (dateInput) {
+      const today = new Date().toISOString().split('T')[0];
+      dateInput.value = today;
+      dateInput.min = today;
+    }
+
+    // Scroll reveal observer
+    const reveals = document.querySelectorAll('.reveal-init');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, {
+        root: null,
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      reveals.forEach(el => observer.observe(el));
+    } else {
+      reveals.forEach(el => el.classList.add('reveal-visible'));
+    }
+  });
+
+  // Envío automatizado formateado hacia el WhatsApp oficial
+  function enviarWhatsApp(e) {
+    e.preventDefault();
+    const servicio = document.getElementById('formServicio').value;
+    const barbero = document.getElementById('formBarbero').value;
+    const fecha = document.getElementById('formFecha').value;
+    const hora = document.getElementById('formHora').value;
+    const nombre = document.getElementById('formNombre').value;
+    const telefono = document.getElementById('formTelefono').value;
+
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = `<span class="material-symbols-outlined text-xl animate-spin">sync</span><span>Abriendo WhatsApp...</span>`;
+      setTimeout(() => {
+        submitBtn.innerHTML = originalText;
+      }, 2500);
+    }
+
+    const mensaje = `Hola Distrito Barbería, deseo confirmar una cita:%0A` +
+      `• Nombre: ${encodeURIComponent(nombre)}%0A` +
+      `• Teléfono: ${encodeURIComponent(telefono)}%0A` +
+      `• Servicio: ${encodeURIComponent(servicio)}%0A` +
+      `• Barbero: ${encodeURIComponent(barbero)}%0A` +
+      `• Fecha: ${encodeURIComponent(fecha)}%0A` +
+      `• Hora Deseada: ${encodeURIComponent(hora)}%0A%0A` +
+      `Quedo a la espera de confirmación. ¡Muchas gracias!`;
+
+    const url = `https://wa.me/526621409621?text=${mensaje}`;
+    window.open(url, '_blank');
+  }
+</script></main><footer class="w-full bg-surface-container-lowest text-on-surface py-space-xl border-t border-white/5"><div class="max-w-[1280px] mx-auto px-margin"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-space-xl"><div class="space-y-space-md"><div class="flex items-center gap-space-sm"><span class="font-headline-lg text-headline-lg tracking-wider uppercase text-primary">Distrito</span></div><p class="font-body-md text-body-md text-on-surface-variant max-w-sm">El santuario de la barbería clásica y el estilismo contemporáneo en Sonora. Precisión geométrica, navajas templadas y ritual de toalla caliente.</p><div class="pt-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Est. 2021 • Las Quintas, HMO</span></div></div><div class="space-y-space-sm"><h4 class="font-label-lg text-label-lg uppercase text-primary tracking-widest">Ubicación</h4><p class="font-body-md text-body-md text-on-surface-variant">Calzada de los Ángeles #48<br/>Colonia Las Quintas<br/>Hermosillo, Sonora, C.P. 83240</p><p class="font-label-sm text-label-sm uppercase text-outline pt-space-xs">Estacionamiento privado disponible</p></div><div class="space-y-space-sm"><h4 class="font-label-lg text-label-lg uppercase text-primary tracking-widest">Horarios &amp; Contacto</h4><p class="font-body-md text-body-md text-on-surface-variant">Lunes a Sábado: 09:00 - 20:00<br/>Domingo: 10:00 - 16:00</p><p class="font-body-md text-body-md text-on-surface-variant pt-space-xs"><span class="text-primary font-bold">Tel:</span> +52 (662) 214 8890<br/><span class="text-primary font-bold">Citas:</span> reservas@distritobarberia.mx</p></div><div class="space-y-space-sm"><h4 class="font-label-lg text-label-lg uppercase text-primary tracking-widest">Navegación &amp; Redes</h4><ul class="space-y-space-xs font-body-md text-body-md text-on-surface-variant"><li><a class="hover:text-[#DFB76C] transition-colors duration-200" data-path="servicios" href="#menu-servicios">Menú de Servicios</a></li><li><a class="hover:text-[#DFB76C] transition-colors duration-200" data-path="barberos" href="#reservacion">Nuestros Maestros Barberos</a></li><li><a class="hover:text-[#DFB76C] transition-colors duration-200" data-path="agendar-cita" href="#reservacion">Reservación Online</a></li></ul><div class="flex items-center gap-space-md pt-space-sm"><a class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant hover:text-[#DFB76C] transition-colors duration-200" href="#">Instagram</a><span class="text-outline-variant">•</span><a class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant hover:text-[#DFB76C] transition-colors duration-200" href="#">WhatsApp</a><span class="text-outline-variant">•</span><a class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant hover:text-[#DFB76C] transition-colors duration-200" href="#">Facebook</a></div></div></div><div class="pt-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md"><p class="font-label-sm text-label-sm uppercase tracking-widest text-outline">© 2024 Distrito Barbería. Todos los derechos reservados. Hermosillo, Sonora.</p><div class="flex items-center gap-space-lg font-label-sm text-label-sm uppercase tracking-widest text-outline"><a class="hover:text-[#DFB76C] transition-colors duration-200" href="#">Aviso de Privacidad</a><a class="hover:text-[#DFB76C] transition-colors duration-200" href="#">Términos del Ritual</a></div></div></div></footer></body></html>
